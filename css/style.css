@@ -1,0 +1,253 @@
+body {
+    font-family: "Zilla Slab", serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .btn-buscar {
+    background-color: #d32d2f !important;
+    color: #fff !important; 
+    border: 2px solid #d71c1f !important; 
+    box-shadow: none !important;
+  }
+  
+  .btn-buscar:hover,
+  .btn-buscar:focus,
+  .btn-buscar:active {
+   background-color: #d71c1f !important;
+  }
+
+
+
+  .theme-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .theme-switch .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;   /* ancho reducido */
+    height: 20px;  /* alto reducido */
+  }
+  
+  .theme-switch .switch input.checbox {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .theme-switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #444;
+    transition: 0.4s;
+    border-radius: 20px;
+  }
+  
+  .theme-switch .slider::before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  .theme-switch input.checbox:checked + .slider {
+    background-color: black
+  }
+  
+  .theme-switch input.checbox:checked + .slider::before {
+    transform: translateX(20px);
+  }
+  
+  .theme-switch .icon {
+    font-size: 1.2rem;
+    color: #fff;
+  }
+  
+  p{
+    color: white;
+  }
+
+
+  .product-slider {
+    padding: 1rem;
+    overflow-x: hidden;
+  }
+  
+  .slider-track-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin; /* Firefox */
+  }
+  
+  .slider-track-scroll::-webkit-scrollbar {
+    height: 6px;
+  }
+  .slider-track-scroll::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 3px;
+  }
+  
+  .product-card {
+    min-width: 220px;
+    flex-shrink: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 0.5rem;
+    text-align: center;
+    scroll-snap-align: start;
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .product-card h3 {
+    font-size: 1rem;
+    margin: 0.5rem 0 0.3rem;
+  }
+  
+  .product-card p {
+    font-weight: bold;
+    color: #1a1a1a;
+  }
+  
+  .product-card small {
+    color: #777;
+  }
+  
+/* Temas */
+.light-theme {
+  background-color: #d9d9d9;
+  color: #000;
+}
+
+.dark-theme {
+  background-color: #212529;
+  color: #fff;
+}
+
+/* Switch deslizable */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #999;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* Posición cuando está activado (modo oscuro) */
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider::before {
+  transform: translateX(26px)
+}
+
+/* Contendor para las dos cards como grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+/* Cada tarjeta de producto */
+.product-card { 
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* sombra más suave */
+  width: 100%;
+  max-width: 280px;
+  padding: 5px;
+  text-align:center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: #fff;;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.product-card h3 {
+  font-size: 1.2rem;
+  margin: 0.5em;
+  color: #333;
+}
+
+.product-card p {
+  font-weight: bold;
+  color: #28a745;
+  margin-bottom: 12px;
+}
+
+.product-card button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.product-card button:hover {
+  background-color: #0056b3;
+}
+
