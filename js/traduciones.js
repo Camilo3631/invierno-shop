@@ -34,6 +34,25 @@ const traduccionesFooter = {
   }
 };
 
+const textos = {
+  es: {
+    Productos_Desctados: 'Productos Desctados',
+    Ropa_para_Hombre_y_Mujer: 'Ropa para Hombre y Mujer'
+  },
+
+  en: {
+    Productos_Desctados: 'Featured Products',
+    Ropa_para_Hombre_y_Mujer: 'Clothing for Men and Women'
+  },
+
+  pl: {
+    Productos_Desctados: 'Wyróżnione produkty',
+    Ropa_para_Hombre_y_Mujer: ' Odzież dla mężczyzn i kobiet'
+  }
+
+
+}
+
 const cambiarIdiomaNavbar = (idioma) => {
       const t = traduccionesNavbar[idioma];
       if (!t) return;
@@ -84,11 +103,36 @@ const updateLabel = () => {
   });
 }
 
+const cambiarIdiomaTextos = (idioma) => {
+  const traduccion =  textos[idioma];
+  if (!traduccion) {
+    console.warn(`Idioma no soportado: ${idioma}`);
+    return;
+  }
+
+    const sliderTitle = document.querySelector('.slider-title');
+    const cardTitle = document.querySelector('.card-title');
+
+    if (sliderTitle) sliderTitle.textContent = traduccion.Productos_Desctados;
+    if (cardTitle) cardTitle.textContent = traduccion.Ropa_para_Hombre_y_Mujer;
+  };
+
+
+
+
+
+
+
+
+
+
 const actualizarIdioma = () => {
   const idioma = langLabels[currentIndex];
   localStorage.setItem('idioma', idioma);
   cambiarIdiomaNavbar(idioma);
   cambiarIdiomaFooter(idioma);
+ cambiarIdiomaTextos(idioma);
+
 
 };
 

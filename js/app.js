@@ -76,20 +76,3 @@ const loadClothingProducts =  async () => {
 loadFeaturedProducts()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
