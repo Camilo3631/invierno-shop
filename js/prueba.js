@@ -157,9 +157,128 @@ gridproducts();
 
 
 
+function cargarFormularioContacto() {
+  const section = document.getElementById('contact-section');
+  section.innerHTML = `
+    <div class="form-wrapper mx-auto">
+      <h3 class="text-center mb-4">Contáctanos:</h3>
+      <form>
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombre">
+        </div>
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo</label>
+          <input type="email" class="form-control" id="correo">
+        </div>
+        <div class="mb-3">
+          <label for="mensaje" class="form-label">Mensaje</label>
+          <textarea class="form-control" id="mensaje" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-polish w-100">Enviar</button>
+      </form>
+    </div>
+  `;
+  section.classList.remove('d-none'); // Mostrar sección
+}
+
+cargarFormularioContacto();
 
 
 
+
+
+
+
+
+
+
+
+
+
+// Función principal del carrito
+const agregaralCarrito = () => {
+  // Ocultar otras secciones
+  slaiderProducts.classList.add('d-none');
+  cardProducts.classList.add('d-none');
+  sectionContact.classList.add('d-none');
+  gridProducts.classList.add('d-none');
+  shoppingCart.classList.remove('d-none');
+
+  const listaCarrito = shoppingCart.querySelector('.lista-carrito');
+  const totalTexto = shoppingCart.querySelector('.total-carrito');
+  const mensajePago = shoppingCart.querySelector('.mensaje-pago');
+
+  listaCarrito.innerHTML = '';
+  mensajePago.classList.add('d-none');
+
+  let total = 0;
+
+  productosSeleccionados.forEach(producto => {
+    const item = document.createElement('li');
+    item.innerHTML = `
+      ${producto.title} - $${producto.price} x ${producto.cantidad}
+      <button class="btn btn-outline-light btn-sm btn-borrar" data-id="${producto.id}">❌</button>
+
+    `;
+    listaCarrito.appendChild(item);
+
+    const precio = Number(producto.price) || 0;
+    const cantidad = Number(producto.cantidad) || 0;
+    total += precio * cantidad;
+  });
+
+  totalTexto.textContent = `Total: $${total.toFixed(2)}`;
+};
+
+// Evento para borrar productos del carrito
+shoppingCart.addEventListener('click', e => {
+  if (e.target.classList.contains('btn-borrar')) {
+    const id = parseInt(e.target.dataset.id);
+    const index = productosSeleccionados.findIndex(p => p.id === id);
+    if (index !== -1) {
+      productosSeleccionados.splice(index, 1);
+      agregaralCarrito();
+    }
+  }
+});
+
+// Evento para botón de pagar
+document.getElementById('btn-pagar').addEventListener('click', () => {
+  if (productosSeleccionados.length === 0) return;
+  productosSeleccionados.length = 0;
+  agregaralCarrito();
+  const mensajePago = shoppingCart.querySelector('.mensaje-pago');
+  mensajePago.classList.remove('d-none');
+});
+
+// Ejemplo de cómo agregar productos desde una tarjeta
+function crearTarjetaProducto(producto) {
+  const card = document.createElement('div');
+  card.classList.add('product-card');
+  card.innerHTML = `
+    <h4>${producto.title}</h4>
+    <p>$${producto.price}</p>
+    <button class="btn-agregar">Agregar al carrito</button>
+  `;
+
+  card.querySelector('.btn-agregar').addEventListener('click', () => {
+    const existente = productosSeleccionados.find(p => p.id === producto.id);
+    if (existente) {
+      existente.cantidad += 1;
+    } else {
+      productosSeleccionados.push({
+        id: producto.id,
+        title: producto.title,
+        price: producto.price,
+        cantidad: 1
+      });
+    }
+    agregaralCarrito();
+  });
+
+  return card;
+}
 
 
 

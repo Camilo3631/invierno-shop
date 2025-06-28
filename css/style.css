@@ -251,3 +251,69 @@ input:checked + .slider::before {
   background-color: #0056b3;
 }
 
+
+.product-card button {
+  border-radius:20px !important; /* sin bordes redondeados */
+  font-size: 0.80rem;          /* más pequeño */
+  padding: 2px 6px;            /* menos espacio interno */
+}
+
+
+
+  
+.btn-polish {
+  background-color: #d32d2f !important;
+  color: #fff !important; 
+  border: 2px solid #d71c1f !important; 
+  box-shadow: none !important;
+  border-radius: none;
+}
+
+.btn-buscar:hover,
+.btn-buscar:focus,
+.btn-buscar:active {
+ background-color: #d71c1f !important;
+ border-radius: none;
+}
+
+.form-wrapper {
+  max-width: 500px;
+  padding: 1rem;
+  color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+
+
+
+.contenido-carrito {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem; /* separación moderada */
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.lista-carrito {
+  min-width: 180px;
+}
+
+#btn-pagar {
+  height: 25px;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+}
+
+
+.btn-polish-white {
+  background-color: white;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.btn-polish-white:hover {
+  background-color: #f2f2f2;
+  color: #000;
+}
