@@ -34,7 +34,7 @@ Invierno Shop es una tienda oline Spa (Single Page Application) desarrollada con
 
   •  🇬🇧 Inglés
 
- •  🇵🇱 Polaco
+  •  🇵🇱 Polaco
 
 
 
