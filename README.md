@@ -9,31 +9,30 @@ Invierno Shop es una SPA (Single Page Application) de tienda en línea desarroll
 
 🚀 Características
 
-• 🌍 Selector de idioma: español, inglés y polaco, con preferencia guardada en el navegador.
+• 🌍🌍 Selector de idioma: Español, Inglés y Polaco, con preferencia guardada en el navegador.
 
-• 🛒 Carrito funcional: sumar/restar productos, eliminar, mostrar total y botón de pago simulado.
+• 🛒 🛒 Carrito funcional: Sumar/restar productos, eliminar, mostrar total y botón de pago simulado.
 
-• 🧺 Productos por categoría: solo ropa, cargada dinámicamente desde DummyJSON.
+• 🧺 Productos por categoría: Ropa para hombre y mujer, cargada dinámicamente desde la API.
 
-• 📱 Diseño responsive: interfaz adaptable a dispositivos móviles, tablets y escritorio.
+• 📱 Diseño responsive: Interfaz adaptable a móviles, tablets y escritorio.
 
-• ⚡ SPA rápida: navegación fluida sin recargar la página.
+•  ⚡ SPA rápida: Navegación fluida sin recargar la página.
 
 🧑‍💻 Tecnologías Utilizadas
 
- - HTML5
-- 	Bootstrap 5.3 (CDN)
-- JavaScript clásico (Vanilla JS, sin ES6+)
-- DummyJSON API
-- Vercel (deploy)
+• HTML5
+• Bootstrap 5.3 (CDN)
+• JavaScript Vanilla (sin ES6+)
+• DummyJSON API
+• Vercel (deploy)
 
-  🌐 Idiomas Disponibles
+🌐 Idiomas Disponibles
 
-  • 🇪🇸 Español
+• 🇪🇸 Español
+• 🇬🇧 Inglés
+• 🇵🇱 Polaco
 
-  •  🇬🇧 Inglés
-
-  •  🇵🇱 Polaco
 
 
 
