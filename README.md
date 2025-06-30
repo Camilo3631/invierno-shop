@@ -1,7 +1,6 @@
  🛍️ Invierno Shop 
 
-Invierno Shop es una tienda 	en línea SPA (Single Page Application) desarrollada con HTML5, Boostrap5.3 y JavaScript Vanilla. Permite explorar productos desde una API externa, cambiar el idioma, agregar al carrito, y simular una compra, todo sin recargar la página.
-
+Invierno Shop es una SPA (Single Page Application) de tienda en línea desarrollada con HTML5, Bootstrap 5.3 y JavaScript Vanilla. Permite explorar productos desde una API externa, cambiar el idioma del sitio, agregar productos al carrito y simular una compra, todo sin necesidad de recargar la página.
 
  🌐 Demo en Vivo
 
