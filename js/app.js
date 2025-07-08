@@ -158,41 +158,114 @@ const mostrarGridProducts = async () => {
   }
 };
 
-
 mostrarGridProducts();
 
 
 const cargarFormularioContacto = () => {
   const section = document.getElementById('contact-section');
+
   section.innerHTML = `
     <div class="form-wrapper mx-auto">
       <h3 class="text-center mb-4" data-key="contacto_titulo">Contáctanos:</h3>
-      <form>
+      <form id="form-contacto" novalidate> 
         <div class="mb-3">
           <label for="nombre" class="form-label" data-key="contacto_nombre">Nombre</label>
           <input type="text" class="form-control" id="nombre">
+          <div class="invalid-feedback text-center fw-bold" id="error-nombre"></div>
         </div>
         <div class="mb-3">
           <label for="correo" class="form-label" data-key="contacto_correo">Correo</label>
           <input type="email" class="form-control" id="correo">
+          <div class="invalid-feedback text-center fw-bold" id="error-correo"></div>
         </div>
         <div class="mb-3">
           <label for="mensaje" class="form-label" data-key="contacto_mensaje">Mensaje</label>
           <textarea class="form-control" id="mensaje" rows="4"></textarea>
+          <div class="invalid-feedback text-center fw-bold" id="error-mensaje"></div>
         </div>
         <button type="submit" class="btn btn-polish w-100" data-key="contacto_enviar">Enviar</button>
       </form>
     </div>
   `;
-  section.classList.remove('d-none');
 
-  // Traducir inmediatamente después de insertar el HTML
+  section.classList.remove('d-none');
   const idiomaActual = localStorage.getItem('idioma') || 'es';
   cambiarIdiomaContacto(idiomaActual);
+
+  const form = document.getElementById('form-contacto');
+  const mensajeExito = document.getElementById('mensaje-exito');
+
+  const nombre = document.getElementById('nombre');
+  const correo = document.getElementById('correo');
+  const mensaje = document.getElementById('mensaje');
+
+  const errorNombre = document.getElementById('error-nombre');
+  const errorCorreo = document.getElementById('error-correo');
+  const errorMensaje = document.getElementById('error-mensaje');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Limpiar errores previos
+    [nombre, correo, mensaje].forEach(input => input.classList.remove('is-invalid'));
+    [errorNombre, errorCorreo, errorMensaje].forEach(div => div.textContent = '');
+
+    let hayErrores = false;
+    const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const mostrarError = (input, div, mensaje) => {
+      input.classList.add('is-invalid');
+      div.textContent = `❗ ${mensaje}`;
+      hayErrores = true;
+      setTimeout(() => {
+        input.classList.remove('is-invalid');
+        div.textContent = '';
+      }, 3000);
+    };
+
+    if (!nombre.value.trim()) {
+      mostrarError(nombre, errorNombre, 'Por favor ingresa tu nombre.');
+    }
+
+    if (!correo.value.trim()) {
+      mostrarError(correo, errorCorreo, 'Por favor ingresa tu correo.');
+    } else if (!correoValido.test(correo.value.trim())) {
+      mostrarError(correo, errorCorreo, 'El correo no es válido.');
+    }
+
+    if (!mensaje.value.trim()) {
+      mostrarError(mensaje, errorMensaje, 'Por favor escribe un mensaje.');
+    }
+
+    if (hayErrores) return;
+
+    mensajeExito.textContent = '✅ ¡Mensaje enviado con éxito!';
+    mensajeExito.classList.remove('d-none');
+    form.reset();
+
+    setTimeout(() => {
+      mensajeExito.classList.add('d-none');
+    }, 3000);
+  });
+};
+
+
+
+// Recuperar productos del carrito guardados en localStorage
+const guardado = localStorage.getItem('carrito');
+const productosSeleccionados = guardado ? JSON.parse(guardado) : [];
+
+// 🔄 Función para actualizar el contador del carrito
+const  actualizarContadorCarrito = () => {
+  const totalCantidad = productosSeleccionados.reduce((acc, p) => acc + p.cantidad, 0);
+  const contador = document.getElementById('contador-carrito');
+  if (contador) {
+    contador.textContent = totalCantidad;
+    contador.style.display = totalCantidad > 0 ? 'inline-block' : 'none';
+  }
 }
 
-const productosSeleccionados = [];
-// Función principal del carrito
+// Función principal del carrito-l
 const agregaralCarrito = () => {
   // Ocultar otras secciones
   slaiderProducts.classList.add('d-none');
@@ -201,12 +274,11 @@ const agregaralCarrito = () => {
   gridProducts.classList.add('d-none');
   shoppingCart.classList.remove('d-none');
 
-
   listaCarrito.innerHTML = '';
   mensajePago.classList.add('d-none');
 
   const idioma = localStorage.getItem('idioma') || 'es';
-  const textos = traduccionesCart[idioma]; // 👈 Accede
+  const textos = traduccionesCart[idioma] || traduccionesCart['es'];
 
   let total = 0;
 
@@ -215,7 +287,6 @@ const agregaralCarrito = () => {
     item.innerHTML = `
       ${producto.title} - $${producto.price} x ${producto.cantidad}
       <button class="btn btn-outline-light btn-sm btn-borrar" data-id="${producto.id}">❌</button>
-
     `;
     listaCarrito.appendChild(item);
 
@@ -224,7 +295,11 @@ const agregaralCarrito = () => {
     total += precio * cantidad;
   });
 
- totalTexto.textContent = `${textos.total}: $${total.toFixed(2)}`;
+  totalTexto.textContent = `${textos.totalText}: $${total.toFixed(2)}`;
+
+  // Guardar en localStorage y actualizar contador
+  localStorage.setItem('carrito', JSON.stringify(productosSeleccionados));
+  actualizarContadorCarrito();
 };
 
 // Evento para borrar productos del carrito
@@ -234,6 +309,7 @@ shoppingCart.addEventListener('click', e => {
     const index = productosSeleccionados.findIndex(p => p.id === id);
     if (index !== -1) {
       productosSeleccionados.splice(index, 1);
+      localStorage.setItem('carrito', JSON.stringify(productosSeleccionados));
       agregaralCarrito();
     }
   }
@@ -243,13 +319,14 @@ shoppingCart.addEventListener('click', e => {
 document.getElementById('btn-pagar').addEventListener('click', () => {
   if (productosSeleccionados.length === 0) return;
   productosSeleccionados.length = 0;
+  localStorage.removeItem('carrito');
   agregaralCarrito();
   const mensajePago = shoppingCart.querySelector('.mensaje-pago');
   mensajePago.classList.remove('d-none');
 });
 
 // Ejemplo de cómo agregar productos desde una tarjeta
-function crearTarjetaProducto(producto) {
+const crearTarjetaProducto = (producto) =>  {
   const card = document.createElement('div');
   card.classList.add('product-card');
   card.innerHTML = `
@@ -270,33 +347,13 @@ function crearTarjetaProducto(producto) {
         cantidad: 1
       });
     }
+
+    localStorage.setItem('carrito', JSON.stringify(productosSeleccionados));
     agregaralCarrito();
   });
 
   return card;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ✅ Al cargar la página, actualizar el contador
+actualizarContadorCarrito();

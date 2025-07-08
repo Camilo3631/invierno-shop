@@ -34,13 +34,6 @@
             <li class="nav-item"><a class="nav-link fw-bold text-white" href="#productos">Productos</a></li>
             <li class="nav-item"><a class="nav-link fw-bold text-white" href="#contacto">Contacto</a></li>
           </ul>
-          <!-- Buscador -->
-          <form class="d-flex mx-auto">
-            <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="search">
-            <button class="btn btn-buscar" type="submit">
-              <i class="bi bi-search"></i>
-            </button>
-          </form>
           <!-- Toggles + carrito -->
           <div class="d-flex align-items-center ms-3">
             <!-- Switch de idiomas -->
@@ -67,9 +60,14 @@
               <span class="icon bi bi-sun-fill"></span>
             </div>
             <!-- Icono carrito -->
-            <a href="#shopping-cart" class="text-white me-3 ms-3">
+            <a href="#shopping-cart" class="position-relative text-white me-3 ms-3" onclick="agregaralCarrito()">
               <i class="bi bi-cart" style="font-size: 1.4rem;"></i>
-            </a>
+              <span id="contador-carrito"
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    style="font-size: 0.7rem;">
+                0
+              </span>
+            </a>            
           </div>
         </div>
     </nav>
@@ -127,6 +125,10 @@
 
     <!-- Botón para mostrar el formulario -->
     <button id="btn-contacto" class="btn btn-outline-primary">Contacto</button>
+
+    <div id="mensaje-exito" class="alert alert-success mt-4 d-none" data-key="contacto_exito">
+      ¡Mensaje enviado con éxito!
+    </div>
   </section>
   </main>
   <footer class="bg-dark text-light text-center py-4">

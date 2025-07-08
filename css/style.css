@@ -317,3 +317,71 @@ input:checked + .slider::before {
   background-color: #f2f2f2;
   color: #000;
 }
+
+
+@media (max-width: 768px) { 
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Una sola columna */
+    gap: 8px;
+    max-width: 600px;
+    margin: 0 auto; /* Centra horizontalmente */
+    padding: 0 50px; /* Opcional: agrega espacio lateral en móviles */
+  }
+
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+@media (max-width: 830px) {
+
+
+
+
+
+
+}
+
+
+
+@media (max-width: 380px) {
+
+
+
+
+
+
+
+}
+
+
+
+
+@media (min-width: 1180px) {
+
+
+
+}
+

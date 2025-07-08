@@ -79,70 +79,59 @@ const traduccionesContacto = {
 
 const traduccionesCart = { 
   es: {
-     carTitlte: 'Tu Carrito',
-     totalText: 'Total',
-     payButton: 'Pagar',
-     empytyCart: 'Tu carrito está vacío',
-     pagoExitoso: '✅ Pago exitoso'
-  },
-  en: {
-
-    carTitlte: 'Your Cart',
+    cartTitle: 'Tu Carrito',
     totalText: 'Total',
     payButton: 'Pagar',
-    empytyCart: 'Tu carrito está vacío',
-    pagoExitoso: '✅ Payment succesful'
+    emptyCart: 'Tu carrito está vacío',
+    pagoExitoso: '✅ Pago exitoso'
+  },
+  en: {
+    cartTitle: 'Your Cart',
+    totalText: 'Total',
+    payButton: 'Pay',
+    emptyCart: 'Your cart is empty',
+    pagoExitoso: '✅ Payment successful'
   },
   pl: {
-    carTitlte: 'Twój Koszyk',
+    cartTitle: 'Twój Koszyk',
     totalText: 'Razem',
     payButton: 'Zapłać',
-    emptyCart: 'Twój koszyk jest pusty.',
-    pagoExitoso: '✅ Płatność zakocńzona'
-
-
-
-
-
-
+    emptyCart: 'Twój koszyk jest pusty',
+    pagoExitoso: '✅ Płatność zakończona'
   }
-
 };
 
+function traducirCarrito(idioma = 'es') {
+  const textos = traduccionesCart[idioma] || traduccionesCart['es'];
 
-function traducirCarrito(idioma) {
-  const textos = traduccionesCart[idioma];
-
+  // 🛒 Título del carrito
   const titulo = document.querySelector('#shopping-cart h2');
   if (titulo) titulo.textContent = textos.cartTitle;
 
-  const botonPagar = document.getElementById('btn-pagar');
-  if (botonPagar) botonPagar.textContent = textos.payButton;
-
+  // 💰 Texto del total (manteniendo el monto actual)
   const totalTexto = document.querySelector('.total-carrito');
   if (totalTexto) {
     const monto = totalTexto.textContent.match(/\$\d+(?:\.\d{2})?/)?.[0] || "$0.00";
     totalTexto.textContent = `${textos.totalText}: ${monto}`;
   }
 
+  // ✅ Botón de pagar
+  const botonPagar = document.getElementById('btn-pagar');
+  if (botonPagar) botonPagar.textContent = textos.payButton;
+
+  // 💬 Mensaje de pago exitoso
   const mensajePago = document.querySelector('.mensaje-pago');
-  if (mensajePago) mensajePago.textContent = textos.pagoExitoso;
+  if (mensajePago && mensajePago.textContent.trim() !== '') {
+    mensajePago.textContent = textos.pagoExitoso;
+  }
+
+  // 🧺 Mensaje de carrito vacío si no hay productos
+  const listaCarrito = document.querySelector('.lista-carrito');
+  const mensajeVacio = document.querySelector('.mensaje-carrito-vacio');
+  if (listaCarrito && mensajeVacio && listaCarrito.children.length === 0) {
+    mensajeVacio.textContent = textos.emptyCart;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

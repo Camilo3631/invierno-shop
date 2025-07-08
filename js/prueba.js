@@ -290,17 +290,3 @@ function crearTarjetaProducto(producto) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
