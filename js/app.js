@@ -7,70 +7,107 @@ const apiComerce = axios.create({
 
 const track = document.getElementById('productSliderTrack');
 
+// Mostrar skeletons de carga
+const mostrarSkeletonSlider = () => {
+  track.innerHTML = '';
+  for (let i = 0; i < 4; i++) {
+    const skeleton = document.createElement('div');
+    skeleton.classList.add('skeleton', 'me-3', 'p-2');
+    skeleton.style.minWidth = '200px';
+    skeleton.style.height = '250px';
+    skeleton.style.borderRadius = '10px';
+    skeleton.innerHTML = `
+      <div class="skeleton-img skeleton" style="height: 150px; border-radius: 8px;"></div>
+      <div class="skeleton-text skeleton mt-3"></div>
+      <div class="skeleton-text skeleton w-50 mt-2"></div>
+    `;
+    track.appendChild(skeleton);
+  }
+};
+
+// Cargar productos de ropa y reemplazar skeletons
 const loadClothingProducts = async () => {
   try {
+    mostrarSkeletonSlider(); // Mostrar skeleton mientras se cargan los datos
 
     const [menRes, womenRes] = await Promise.all([
       apiComerce('products/category/mens-shirts'),
       apiComerce('products/category/womens-dresses')
-    ])
+    ]);
 
-    const menData = await menRes.data;
-    const womenData = await womenRes.data;
+    const menData = menRes.data;
+    const womenData = womenRes.data;
 
     const clothingProducts = [...menData.products, ...womenData.products].slice(0, 8);
 
+    track.innerHTML = ''; // Quitar skeletons
+
     clothingProducts.forEach(product => {
       const card = document.createElement('div');
-      card.classList.add('product-card');
-      card.innerHTML = ` 
-          <img src="${product.thumbnail}" alt=${product.title}">
-          <h3>${product.title}</h3>
-          <p>${product.price}</p>
-          <small>${product.description.slice(0, 40)}...</small>
-          `;
+      card.classList.add('product-card', 'me-3', 'p-2');
+      card.style.minWidth = '200px';
+      card.style.height = '250px';
+      card.style.border = '1px solid #ccc';
+      card.style.borderRadius = '10px';
+      card.style.overflow = 'hidden';
+
+      card.innerHTML = `
+        <img src="${product.thumbnail}" alt="${product.title}" style="height: 150px; width: 100%; object-fit: cover; border-radius: 8px;">
+        <h5 class="mt-2" style="font-size: 1rem;">${product.title}</h5>
+        <p class="text-muted mb-0" style="font-size: 0.9rem; color: green;">$${product.price}</p>
+        <small style="font-size: 0.8rem; color: #666;">${product.description.slice(0, 40)}...</small>
+      `;
       track.appendChild(card);
     });
+
+    // Mostrar la sección si está oculta
+    document.querySelector('.product-slider').classList.remove('d-none');
+
   } catch (error) {
-    console.error('Error al cargar ropa:', error)
-  }
-}
-
-loadClothingProducts();
-
-const loadFeaturedProducts = async () => {
-  try {
-    // Peticiones paralelas para ropa de hombre y mujer
-    const [menRes, womenRes] = await Promise.all([
-      apiComerce('products/category/mens-shirts'),
-      apiComerce('products/category/womens-dresses'),
-    ])
-
-    // Seleccion de productos especiíficos
-    const menProduct = menRes.data.products[3];
-    const womenProduct = womenRes.data.products[3];
-
-    // Referencia a los contendores en el HTML
-    const menCard = document.getElementById('menProduct');
-    const womenCard = document.getElementById('womenProduct');
-
-    // Card para ropa de hombre
-    menCard.innerHTML = `
-       <img src="${menProduct.thumbnail}" alt=${menProduct.title}">
-       <h3>${menProduct.title}</h3>
-       <p>${menProduct.price}</p>
-      `;
-
-    // Card para ropa de mujer
-    womenCard.innerHTML = `
-        <img src="${womenProduct.thumbnail}" alt="${womenProduct.title}">
-        <h3>${womenProduct.title}</h3>
-        <p>${womenProduct.price}</p>
-        `;
-  } catch (error) {
-    console.error('Error al cargar productos de hombre y mujer:', error);
+    console.error('Error al cargar ropa:', error);
+    track.innerHTML = '<p class="text-danger">Error al cargar productos.</p>';
   }
 };
+
+// Ejecutar
+loadClothingProducts();
+
+
+
+
+  const loadFeaturedProducts = async () => {
+    try {
+      // Peticiones paralelas para ropa de hombre y mujer
+      const [menRes, womenRes] = await Promise.all([
+        apiComerce('products/category/mens-shirts'),
+        apiComerce('products/category/womens-dresses'),
+      ])
+
+      // Seleccion de productos especiíficos
+      const menProduct = menRes.data.products[3];
+      const womenProduct = womenRes.data.products[3];
+
+      // Referencia a los contendores en el HTML
+      const menCard = document.getElementById('menProduct');
+      const womenCard = document.getElementById('womenProduct');
+
+      // Card para ropa de hombre
+      menCard.innerHTML = `
+        <img src="${menProduct.thumbnail}" alt=${menProduct.title}">
+        <h3>${menProduct.title}</h3>
+        <p>${menProduct.price}</p>
+        `;
+
+      // Card para ropa de mujer
+      womenCard.innerHTML = `
+          <img src="${womenProduct.thumbnail}" alt="${womenProduct.title}">
+          <h3>${womenProduct.title}</h3>
+          <p>${womenProduct.price}</p>
+          `;
+    } catch (error) {
+      console.error('Error al cargar productos de hombre y mujer:', error);
+    }
+  };
 
 
 loadFeaturedProducts();
@@ -185,7 +222,10 @@ const cargarFormularioContacto = () => {
         </div>
         <button type="submit" class="btn btn-polish w-100" data-key="contacto_enviar">Enviar</button>
       </form>
-    </div>
+
+  
+    <div id="mensaje-exito" class="alert alert-success mt-3 text-center d-none"></div>
+  </div>
   `;
 
   section.classList.remove('d-none');

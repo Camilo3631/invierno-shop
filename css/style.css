@@ -4,18 +4,8 @@ body {
     font-style: normal;
   }
   
-  .btn-buscar {
-    background-color: #d32d2f !important;
-    color: #fff !important; 
-    border: 2px solid #d71c1f !important; 
-    box-shadow: none !important;
-  }
   
-  .btn-buscar:hover,
-  .btn-buscar:focus,
-  .btn-buscar:active {
-   background-color: #d71c1f !important;
-  }
+
 
 
 
@@ -269,12 +259,7 @@ input:checked + .slider::before {
   border-radius: none;
 }
 
-.btn-buscar:hover,
-.btn-buscar:focus,
-.btn-buscar:active {
- background-color: #d71c1f !important;
- border-radius: none;
-}
+
 
 .form-wrapper {
   max-width: 500px;
@@ -318,8 +303,28 @@ input:checked + .slider::before {
   color: #000;
 }
 
+@media (min-width: 768px) and (max-width: 1179px) {
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+}
 
-@media (max-width: 768px) { 
+
+
+
+
+
+@media (max-width: 767px) {
+  /* Estilos para móviles */
+
+
+
 
   .product-grid {
     display: grid;
@@ -331,47 +336,6 @@ input:checked + .slider::before {
   }
 
 
- 
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-@media (max-width: 830px) {
-
-
-
-
-
-
-}
-
-
-
-@media (max-width: 380px) {
-
-
-
-
-
 
 
 }
@@ -381,7 +345,56 @@ input:checked + .slider::before {
 
 @media (min-width: 1180px) {
 
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
 
 
+
+}
+
+
+.skeleton {
+  background-color: #e0e0e0;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.skeleton-img {
+  width: 100%;
+}
+
+.skeleton-text {
+  height: 16px;
+  background-color: #ccc;
+  margin: 5px 0;
+  border-radius: 4px;
+}
+  
+
+
+.skeleton-card {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f8f8f8 37%, #e0e0e0 63%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }
 
