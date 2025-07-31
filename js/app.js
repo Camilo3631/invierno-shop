@@ -5,78 +5,158 @@ const apiComerce = axios.create({
   }
 })
 
+// Creamos el instersion observer
+const createObserver = () => {
+  // Selecciónamos las imágenes 
+  const img = document.querySelectorAll('img[data-src]');
+
+  // Configuración el intersionObserver
+  const options =  {
+    rootMargin: '300px',
+    threshold: 0.1,
+  };
+
+  // Callback que se ejecuta cuando la imágen entra en el área visible
+  const callback = (entries, observer) => {
+     entries.forEach(entry => {
+         // Si la imagen esta visible 
+         if (entry.isIntersecting) {
+          const img = entry.target;
+          const dataSrc = img.dataset.src;
+
+           // Carga la imagen y elimina el data-src
+           if (dataSrc) {
+            img.src = dataSrc;
+            img.removeAttribute('data-src');
+           }
+
+            // Deja de observar la imágen
+            observer.unobserve(img);
+         }
+        
+    })
+};
+
+ // Crea y comienza a observar las imágenes
+ const observer = new IntersectionObserver(callback, options);
+
+ img.forEach(img => observer.observe(img));
+
+};
+
+// Ejecutamos la función una vez que el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', createObserver);
+
 const track = document.getElementById('productSliderTrack');
 
 const loadClothingProducts = async () => {
-  try {
+  // 👉 Mostrar los 8 skeletons
+  track.innerHTML = ''; // Limpia lo anterior
 
+  for (let i = 0; i < 8; i++) {
+    const skeleton = document.createElement('div');
+    skeleton.classList.add('loading-card-slider');
+    track.appendChild(skeleton);
+  }
+
+  try {
     const [menRes, womenRes] = await Promise.all([
       apiComerce('products/category/mens-shirts'),
       apiComerce('products/category/womens-dresses')
-    ])
+    ]);
 
-    const menData = await menRes.data;
-    const womenData = await womenRes.data;
+    const menData = menRes.data;
+    const womenData = womenRes.data;
 
     const clothingProducts = [...menData.products, ...womenData.products].slice(0, 8);
 
+    // 👉 Reemplazar skeletons por productos reales
+    track.innerHTML = '';
+
     clothingProducts.forEach(product => {
       const card = document.createElement('div');
-      card.classList.add('product-card');
-      card.innerHTML = ` 
-          <img src="${product.thumbnail}" alt=${product.title}">
-          <h3>${product.title}</h3>
-          <p>${product.price}</p>
-          <small>${product.description.slice(0, 40)}...</small>
-          `;
+      card.classList.add('product-card', 'loaded'); // Agrega fondo blanco al cargar
+      card.innerHTML = `
+        <img data-src="${product.thumbnail}" alt="${product.title}">
+        <h3>${product.title}</h3>
+        <p>$${product.price.toFixed(2)}</p>
+        <small>${product.description.slice(0, 40)}...</small>
+      `;
       track.appendChild(card);
     });
-  } catch (error) {
-    console.error('Error al cargar ropa:', error)
-  }
-}
 
-loadClothingProducts();
+    createObserver(); // Lazy load imágenes
+  } catch (error) {
+    console.error('Error al cargar ropa:', error);
+  }
+};
+
 
 const loadFeaturedProducts = async () => {
+  const menCard = document.getElementById('menProduct');
+  const womenCard = document.getElementById('womenProduct');
+
+  // Mostrar skeleton
+  menCard.classList.remove('loaded');
+  womenCard.classList.remove('loaded');
+  menCard.innerHTML = `<div class="loading-card"></div>`;
+  womenCard.innerHTML = `<div class="loading-card"></div>`;
+
   try {
-    // Peticiones paralelas para ropa de hombre y mujer
     const [menRes, womenRes] = await Promise.all([
       apiComerce('products/category/mens-shirts'),
       apiComerce('products/category/womens-dresses'),
-    ])
+    ]);
 
-    // Seleccion de productos especiíficos
     const menProduct = menRes.data.products[3];
     const womenProduct = womenRes.data.products[3];
 
-    // Referencia a los contendores en el HTML
-    const menCard = document.getElementById('menProduct');
-    const womenCard = document.getElementById('womenProduct');
-
-    // Card para ropa de hombre
+    // Mostrar contenido
     menCard.innerHTML = `
-       <img src="${menProduct.thumbnail}" alt=${menProduct.title}">
-       <h3>${menProduct.title}</h3>
-       <p>${menProduct.price}</p>
-      `;
-
-    // Card para ropa de mujer
+      <img data-src="${menProduct.thumbnail}" alt="${menProduct.title}" />
+      <h3>${menProduct.title}</h3>
+      <p>$${menProduct.price.toFixed(2)}</p>
+    `;
     womenCard.innerHTML = `
-        <img src="${womenProduct.thumbnail}" alt="${womenProduct.title}">
-        <h3>${womenProduct.title}</h3>
-        <p>${womenProduct.price}</p>
-        `;
+      <img data-src="${womenProduct.thumbnail}" alt="${womenProduct.title}" />
+      <h3>${womenProduct.title}</h3>
+      <p>$${womenProduct.price.toFixed(2)}</p>
+    `;
+
+    // Activar fondo blanco
+    menCard.classList.add('loaded');
+    womenCard.classList.add('loaded');
+
+    createObserver();
   } catch (error) {
     console.error('Error al cargar productos de hombre y mujer:', error);
   }
 };
 
+const mostrarSkeletonPrductos = () => {
+   const grid = gridProducts.querySelector('.grid-products');
+   grid.classList.remove('loaded');
+   grid.innerHTML = '';
+   for (let i = 0; i < 8; i++) {
+    const skeleton = document.createElement('div');
+    skeleton.classList.add('loading-card-grid');
+    grid.appendChild(skeleton);
+   }  
+};
+
+const ocultarSkeletonProductos = () => {
+  const grid = gridProducts.querySelector('.grid-products');
+  const skeletons = grid.querySelectorAll('.loading-card-grid');
+  skeletons.forEach(skeleton => skeleton.remove());
+};
+
+
+
+
 
 loadFeaturedProducts();
 const productosPorPagina = 8;
-let totalDeProductos = [];
-// global, debe estar fuera
+let totalDeProductos = []; // Global
 
 const mostrarGridProducts = async () => {
   // Ocultar otras secciones, mostrar grid
@@ -85,6 +165,11 @@ const mostrarGridProducts = async () => {
   sectionContact.classList.add('d-none');
   shoppingCart.classList.add('d-none');
   gridProducts.classList.remove('d-none');
+
+  const grid = gridProducts.querySelector('.grid-products');
+
+  // Mostrar skeletons y quitar fondo blanco
+   mostrarSkeletonPrductos(); // ✅ Limpio y reutilizable+
 
   try {
     // Carga productos de las categorías
@@ -101,14 +186,14 @@ const mostrarGridProducts = async () => {
       .sort(() => Math.random() - 0.5)
       .slice(0, productosPorPagina);
 
-    const grid = gridProducts.querySelector('.grid-products');
-    grid.innerHTML = '';
+    ocultarSkeletonProductos();
 
+    // Mostrar productos reales
     totalDeProductos.forEach(product => {
       const card = document.createElement('div');
       card.classList.add('product-card');
       card.innerHTML = `
-        <img src="${product.thumbnail}" alt="${product.title}">
+        <img data-src="${product.thumbnail}" alt="${product.title}">
         <h3>${product.title}</h3>
         <p><strong>$${product.price}</strong></p>
         <p class="small text-muted">${product.description.slice(0, 40)}...</p>
@@ -153,6 +238,10 @@ const mostrarGridProducts = async () => {
       grid.appendChild(card);
     });
 
+    // Activar fondo blanco final
+    grid.classList.add('loaded');
+
+    createObserver();
   } catch (error) {
     console.error('Error al cargar productos:', error);
   }
@@ -184,6 +273,7 @@ const cargarFormularioContacto = () => {
           <div class="invalid-feedback text-center fw-bold" id="error-mensaje"></div>
         </div>
         <button type="submit" class="btn btn-polish w-100" data-key="contacto_enviar">Enviar</button>
+        <div id="mensaje-exito" class="alert alert-success mt-4 d-none" data-key="contacto_exito">
       </form>
     </div>
   `;
