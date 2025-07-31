@@ -194,11 +194,12 @@ input:checked + .slider::before {
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* sombra más suave */
   width: 100%;
-  max-width: 280px;
+  max-width: 300px;
   padding: 5px;
   text-align:center;
+  overflow: hidden; /* Oculta bordes sobresalientes */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  background-color: #fff;;
+  background-color: #fff;
 }
 
 .product-card:hover {
@@ -268,6 +269,7 @@ input:checked + .slider::before {
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
+
 
 
 
@@ -397,4 +399,96 @@ input:checked + .slider::before {
     background-position: -100% 0;
   }
 }
+
+
+.loading-card-slider {
+  width: 200px;
+  height: 300px;
+  background-color: #333;
+  border-radius: 10px;
+  margin-right: 15px;
+  animation: loading 1.5s infinite ease-in-out;
+}
+
+
+@keyframes loading {
+  0% { background-color: #444; }
+  50% { background-color: #555; }
+  100% { background-color: #444; }
+}
+
+
+.loading-card {
+  width: 100%;
+  min-height: 300px;
+  background-color: #333;
+  background-size: 300% 300%;
+  animation: loading 1.5s infinite ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+
+
+.product-card {
+  width: 100%;
+  max-width: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+  padding: 0;
+  background-color: transparent; /* SIN fondo al inicio */
+}
+
+.product-card.loaded {
+  background-color: #fff; /* Fondo blanco solo al cargar */
+  padding: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+
+.grid-products.loaded .product-card {
+  background-color: #fff; /* Fondo blanco solo cuando el grid está cargado */
+  padding: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+
+
+.loading-card-grid {
+  height: 340px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+
+#gridProductsSection .grid-products {
+  width: 90%;  /* Cambia a 75% o 70% según lo desees */
+  margin: 0 auto;  /* Centrado horizontal */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+  gap: 20px;  /* Espacio entre las cartas */
+  padding-top: 20px;
+  padding: 20px;
+}
+
+
+
+
+
 
