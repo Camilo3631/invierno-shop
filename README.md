@@ -33,7 +33,6 @@ Invierno Shop es una SPA (Single Page Application) de tienda en línea desarroll
 • 🇬🇧 Inglés
 • 🇵🇱 Polaco
 
-<img width="2046" height="1097" alt="e-comerce" src="https://github.com/user-attachments/assets/35066612-2dc8-4e4f-8d2e-42996c6e0b68" />
 
 
 
