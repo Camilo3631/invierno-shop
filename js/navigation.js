@@ -4,8 +4,7 @@ window.addEventListener('hashchange', navigator, false);
 
 
 function navigator() {
-      // Imprimimos en la consola el objeto location 
-      console.log({ location});
+     
 
       if (location.hash.startsWith('#productos')) {
           productosPage();
@@ -64,19 +63,6 @@ const contactoPage = () => {
 
 
  cargarFormularioContacto();
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
@@ -85,15 +71,5 @@ const shoppingCartPage = () => {
    // Secciones ocultas en el shopingcardPage
    slaiderProducts.classList.add('d-none');
    cardProducts.classList.add('d-none');
-
-
-
    agregaralCarrito();
-
-
-
-
-
-
-
 }
