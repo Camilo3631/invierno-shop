@@ -35,7 +35,7 @@ Invierno Shop es una SPA (Single Page Application) de tienda en línea desarroll
 
 📸 Captura de Invierno Shop
 
-![Captura de Invierno Shop](img/e-comcerce.png)
+![Captura de Invierno Shop](img/e-comerce.png)
 
 
 
