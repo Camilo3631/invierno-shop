@@ -11,36 +11,36 @@ const createObserver = () => {
   const img = document.querySelectorAll('img[data-src]');
 
   // Configuración el intersionObserver
-  const options =  {
+  const options = {
     rootMargin: '300px',
     threshold: 0.1,
   };
 
   // Callback que se ejecuta cuando la imágen entra en el área visible
   const callback = (entries, observer) => {
-     entries.forEach(entry => {
-         // Si la imagen esta visible 
-         if (entry.isIntersecting) {
-          const img = entry.target;
-          const dataSrc = img.dataset.src;
+    entries.forEach(entry => {
+      // Si la imagen esta visible 
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        const dataSrc = img.dataset.src;
 
-           // Carga la imagen y elimina el data-src
-           if (dataSrc) {
-            img.src = dataSrc;
-            img.removeAttribute('data-src');
-           }
+        // Carga la imagen y elimina el data-src
+        if (dataSrc) {
+          img.src = dataSrc;
+          img.removeAttribute('data-src');
+        }
 
-            // Deja de observar la imágen
-            observer.unobserve(img);
-         }
-        
+        // Deja de observar la imágen
+        observer.unobserve(img);
+      }
+
     })
-};
+  };
 
- // Crea y comienza a observar las imágenes
- const observer = new IntersectionObserver(callback, options);
+  // Crea y comienza a observar las imágenes
+  const observer = new IntersectionObserver(callback, options);
 
- img.forEach(img => observer.observe(img));
+  img.forEach(img => observer.observe(img));
 
 };
 
@@ -153,14 +153,14 @@ const loadFeaturedProducts = async () => {
 };
 
 const mostrarSkeletonPrductos = () => {
-   const grid = gridProducts.querySelector('.grid-products');
-   grid.classList.remove('loaded');
-   grid.innerHTML = '';
-   for (let i = 0; i < 8; i++) {
+  const grid = gridProducts.querySelector('.grid-products');
+  grid.classList.remove('loaded');
+  grid.innerHTML = '';
+  for (let i = 0; i < 8; i++) {
     const skeleton = document.createElement('div');
     skeleton.classList.add('loading-card-grid');
     grid.appendChild(skeleton);
-   }  
+  }
 };
 
 const ocultarSkeletonProductos = () => {
@@ -188,7 +188,7 @@ const mostrarGridProducts = async () => {
   const grid = gridProducts.querySelector('.grid-products');
 
   // Mostrar skeletons y quitar fondo blanco
-   mostrarSkeletonPrductos(); // ✅ Limpio y reutilizable+
+  mostrarSkeletonPrductos(); // ✅ Limpio y reutilizable+
 
   try {
     // Carga productos de las categorías
@@ -292,13 +292,15 @@ const cargarFormularioContacto = () => {
           <div class="invalid-feedback text-center fw-bold" id="error-mensaje"></div>
         </div>
         <button type="submit" class="btn btn-polish w-100" data-key="contacto_enviar">Enviar</button>
-        <div id="mensaje-exito" class="alert alert-success mt-4 d-none" data-key="contacto_exito">
+        <div id="mensaje-exito" class="alert alert-success mt-4 d-none" data-key="contacto_exito"></div>
       </form>
 
   
     <div id="mensaje-exito" class="alert alert-success mt-3 text-center d-none"></div>
   </div>
   `;
+
+  themeSwitch();
 
   section.classList.remove('d-none');
   const idiomaActual = localStorage.getItem('idioma') || 'es';
@@ -314,6 +316,8 @@ const cargarFormularioContacto = () => {
   const errorNombre = document.getElementById('error-nombre');
   const errorCorreo = document.getElementById('error-correo');
   const errorMensaje = document.getElementById('error-mensaje');
+
+  const t = mensajesFormulario[idiomaActual];
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -336,17 +340,18 @@ const cargarFormularioContacto = () => {
     };
 
     if (!nombre.value.trim()) {
-      mostrarError(nombre, errorNombre, 'Por favor ingresa tu nombre.');
+      mostrarError(nombre, errorNombre, t.nombreRequerido);
     }
 
     if (!correo.value.trim()) {
-      mostrarError(correo, errorCorreo, 'Por favor ingresa tu correo.');
+      mostrarError(correo, errorCorreo, t.correoRequerido);
     } else if (!correoValido.test(correo.value.trim())) {
-      mostrarError(correo, errorCorreo, 'El correo no es válido.');
+      mostrarError(correo, errorCorreo, t.correoInvalido);
     }
 
+
     if (!mensaje.value.trim()) {
-      mostrarError(mensaje, errorMensaje, 'Por favor escribe un mensaje.');
+      mostrarError(mensaje, errorMensaje, t.mensajeRequerido);
     }
 
     if (hayErrores) return;
@@ -368,7 +373,7 @@ const guardado = localStorage.getItem('carrito');
 const productosSeleccionados = guardado ? JSON.parse(guardado) : [];
 
 // 🔄 Función para actualizar el contador del carrito
-const  actualizarContadorCarrito = () => {
+const actualizarContadorCarrito = () => {
   const totalCantidad = productosSeleccionados.reduce((acc, p) => acc + p.cantidad, 0);
   const contador = document.getElementById('contador-carrito');
   if (contador) {
@@ -438,7 +443,7 @@ document.getElementById('btn-pagar').addEventListener('click', () => {
 });
 
 // Ejemplo de cómo agregar productos desde una tarjeta
-const crearTarjetaProducto = (producto) =>  {
+const crearTarjetaProducto = (producto) => {
   const card = document.createElement('div');
   card.classList.add('product-card');
   card.innerHTML = `

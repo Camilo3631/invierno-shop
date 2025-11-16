@@ -77,7 +77,7 @@ const traduccionesContacto = {
   }
 };
 
-const traduccionesCart = { 
+const traduccionesCart = {
   es: {
     cartTitle: 'Tu Carrito',
     totalText: 'Total',
@@ -100,6 +100,34 @@ const traduccionesCart = {
     pagoExitoso: '✅ Płatność zakończona'
   }
 };
+
+
+const mensajesFormulario = {
+  es: {
+    nombreRequerido: 'Por favor ingresa tu nombre.',
+    correoRequerido: 'Por favor ingresa tu correo.',
+    correoInvalido: 'El correo no es válido.',
+    mensajeRequerido: 'Por favor escribe un mensaje.',
+    exito: '✅ Mensaje enviado con éxito',
+  },
+
+  en: {
+    nombreRequerido: 'Please enter your name.',
+    correoRequerido: 'Please enter your email.',
+    correoInvalido: 'Invalid email address.',
+    mensajeRequerido: 'Please write a message.',
+    exito: '✅ Message sent successfully!'
+  },
+
+  pl: {
+    nombreRequerido: 'Proszę podać swoje imię.',
+    correoRequerido: 'Proszę podać swój adres e-mail.',
+    correoInvalido: 'Nieprawidłowy adres e-mail.',
+    mensajeRequerido: 'Proszę napisać wiadomość.',
+    exito: '✅ Wiadomość została wysłana pomyślnie!'
+  }
+};
+
 
 function traducirCarrito(idioma = 'es') {
   const textos = traduccionesCart[idioma] || traduccionesCart['es'];
@@ -182,7 +210,7 @@ const cambiarIdiomaFooter = (idioma) => {
   if (redes) redes.textContent = t.redes;
   if (pagos) pagos.textContent = t.pagos;
   if (derechos) derechos.textContent = t.derechos;
-  };
+};
 
 // Secciones principales
 const cambiarIdiomaTextos = (idioma) => {
@@ -286,4 +314,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  

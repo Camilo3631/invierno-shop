@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="light-theme">
+<body class="light-theme d-flex flex-column min-vh-100">
   <!-- Encabezado -->
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -63,91 +63,91 @@
             <a href="#shopping-cart" class="position-relative text-white me-3 ms-3" onclick="agregaralCarrito()">
               <i class="bi bi-cart" style="font-size: 1.4rem;"></i>
               <span id="contador-carrito"
-                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                    style="font-size: 0.7rem;">
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style="font-size: 0.7rem;">
                 0
               </span>
-            </a>            
+            </a>
           </div>
         </div>
       </div>
     </nav>
   </header>
   <!--cuerpo de la pagina secciones-->
-  <main>
+  <main class="flex-fill">
     <section class="product-slider d-none"> <!-- agregar la clase d-none-->
       <h3 class="slider-title text-center mb-2">Productos Desctados</h3>
       <div class="slider-track-scroll" id="productSliderTrack">
         <!-- Los productos se insertan aquí -->
-         <div class="loading-card-slider"></div>
-         <div class="loading-card-slider"></div>
-         <div class="loading-card-slider"></div>
-         <div class="loading-card-slider"></div>
-         <div class="loading-card-slider"></div>
-         <div class="loading-card-slider"></div>
-         <div class="loading-card-slider"></div>
-         <div class="loading-card-slider"></div>
+        <div class="loading-card-slider"></div>
+        <div class="loading-card-slider"></div>
+        <div class="loading-card-slider"></div>
+        <div class="loading-card-slider"></div>
+        <div class="loading-card-slider"></div>
+        <div class="loading-card-slider"></div>
+        <div class="loading-card-slider"></div>
+        <div class="loading-card-slider"></div>
       </div>
     </section>
 
-   <section class="highlight-products container my-5 d-none"> <!-- agregar la clase d-none-->
-    <h3 class="card-title text-center mb-2">Ropa para Hombre y Mujer</h3>
-    <div class="product-grid">
-      <div class="product-card" id="menProduct">
-        <div class="loading-card"></div>
+    <section class="highlight-products container my-5 d-none"> <!-- agregar la clase d-none-->
+      <h3 class="card-title text-center mb-2">Ropa para Hombre y Mujer</h3>
+      <div class="product-grid">
+        <div class="product-card" id="menProduct">
+          <div class="loading-card"></div>
+        </div>
+        <div class="product-card" id="womenProduct">
+          <div class="loading-card"></div>
+        </div>
       </div>
-      <div class="product-card" id="womenProduct">
-        <div class="loading-card"></div>
+    </section>
+
+    <section id="gridProductsSection" class="grid-products-section d-none">
+      <div class="grid-products">
+        <!-- Aquí se insertan los productos o skeletons -->
+        <div class="loading-card-grid"></div>
+        <div class="loading-card-grid"></div>
+        <div class="loading-card-grid"></div>
+        <div class="loading-card-grid"></div>
+        <div class="loading-card-grid"></div>
+        <div class="loading-card-grid"></div>
+        <div class="loading-card-grid"></div>
       </div>
+      <div class="pagination-buttons d-flex justify-content-center gap-2 pb-4">
+        <!-- Botones de paginación -->
       </div>
-   </section>
+    </section>
 
-   <section id="gridProductsSection" class="grid-products-section d-none">
-    <div class="grid-products">
-      <!-- Aquí se insertan los productos o skeletons -->
-      <div class="loading-card-grid"></div>
-      <div class="loading-card-grid"></div>
-      <div class="loading-card-grid"></div>
-      <div class="loading-card-grid"></div>
-      <div class="loading-card-grid"></div>
-      <div class="loading-card-grid"></div>
-      <div class="loading-card-grid"></div>
-    </div>
-    <div class="pagination-buttons d-flex justify-content-center gap-2 pb-4">
-      <!-- Botones de paginación -->
-    </div>
-  </section>
-  
-  
 
-   <!-- Section del carrito de compras (shoping cart) -->
-   <section id="shopping-cart" class="container mt-5 text-center d-none">
-    <h2>Tu Carrito</h2>
-  
-    <div class="contenido-carrito d-flex justify-content-center align-items-start flex-wrap text-start">
-      <button id="btn-pagar" class="btn btn-polish mt-3">Pagar</button>
-      <ul class="lista-carrito list-unstyled"></ul>
-    </div>
-  
-    <p class="total-carrito mt-3">Total: $0</p>
-    <p class="mensaje-pago d-none mt-3">✅ Pago exitoso</p>
-  </section>
-  
-  
-  
-  <!-- Seccion de contacto -->
-  <section id="contact-section" class="container my-5 d-none">
+
+    <!-- Section del carrito de compras (shoping cart) -->
+    <section id="shopping-cart" class="container mt-5 text-center d-none">
+      <h2>Tu Carrito</h2>
+
+      <div class="contenido-carrito d-flex justify-content-center align-items-start flex-wrap text-start">
+        <button id="btn-pagar" class="btn btn-polish mt-3">Pagar</button>
+        <ul class="lista-carrito list-unstyled"></ul>
+      </div>
+
+      <p class="total-carrito mt-3">Total: $0</p>
+      <p class="mensaje-pago d-none mt-3">✅ Pago exitoso</p>
+    </section>
+
+
+
+    <!-- Seccion de contacto -->
+    <section id="contact-section" class="container my-5 d-none">
 
 
 
 
-    <!-- Botón para mostrar el formulario -->
-    <button id="btn-contacto" class="btn btn-outline-primary">Contacto</button>
+      <!-- Botón para mostrar el formulario -->
+      <button id="btn-contacto" class="btn btn-outline-primary">Contacto</button>
 
-    <div id="mensaje-exito" class="alert alert-success mt-4 d-none" data-key="contacto_exito">
-      ¡Mensaje enviado con éxito!
-    </div>
-  </section>
+      <div id="mensaje-exito" class="alert alert-success mt-4 d-none" data-key="contacto_exito">
+        ¡Mensaje enviado con éxito!
+      </div>
+    </section>
   </main>
   <footer class="bg-dark text-light text-center py-4">
     <div class="container">

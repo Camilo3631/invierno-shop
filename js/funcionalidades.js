@@ -1,46 +1,37 @@
-const themeSwitch = () => {
-    // Referencia al checkobox del interruptor
-    const themeToggle = document.getElementById('themeSwitch');
-
-    // Revisa  si hay un tema guarado en localStorage
-    const currentTheme = localStorage.getItem('theme') || 'light';
-
-
-    // Al cargar la página, aplica el tema guarado
-    if (currentTheme === 'dark') {
-        document.body.classList.add('dark-theme'); // Activa el tema oscuro
-        themeToggle.checked = true;
-        // Mueve el switch a 'on'    
-    } else {
-        document.body.classList.add('light-theme');  // Por defecto  'claro'
-        themeToggle.checked = false; // Switch en modo 'off'
-    }
-
-    // Evento para cambiar el tema al hacer clic en el interruptor
-    themeToggle.addEventListener('change', () => {
-        if (themeToggle.checked) {
-            // Activar el modo oscuro
-            document.body.classList.remove('light-theme');
-            document.body.classList.add('dark-theme'); // ← Correcto
-            localStorage.setItem('theme', 'dark'); // Guarda el tema oscuro
-        } else {
-            // Activar el modo claro
-            document.body.classList.remove('dark-theme');
-            document.body.classList.add('ligth-theme');
-            localStorage.setItem('theme', 'light'); // Guarda el tema claro
-        }
-    })
+// Función para actualizar colores de todos los elementos incluyendo los dinámicos
+const updateTexts = () => {
+    const theme = localStorage.getItem('theme') || 'light';
+    const color = theme === 'light' ? 'black' : 'white';
+    document.querySelectorAll(
+        'h3, label.form-label, input, textarea, .invalid-feedback, #mensaje-exito, .total-carrito'
+    ).forEach(el => {
+        if (el) el.style.color = color;
+    });
 };
 
-// Ejectua el la función cuando el DOM esté cargando
+// Función principal del switch de tema
+const themeSwitch = () => {
+    const themeToggle = document.getElementById('themeSwitch');
+    if (!themeToggle) return;
+
+    let currentTheme = localStorage.getItem('theme') || 'light';
+    document.body.classList.remove('light-theme', 'dark-theme');
+    document.body.classList.add(currentTheme + '-theme');
+    themeToggle.checked = currentTheme === 'dark';
+
+    updateTexts();
+
+    themeToggle.addEventListener('change', () => {
+        const theme = themeToggle.checked ? 'dark' : 'light';
+        document.body.classList.remove('light-theme', 'dark-theme');
+        document.body.classList.add(theme + '-theme');
+        localStorage.setItem('theme', theme);
+        updateTexts();
+    });
+};
+
+// Llamar al cargar la página
 document.addEventListener('DOMContentLoaded', themeSwitch);
-
-
-
-
-
-
-
 
 
 
